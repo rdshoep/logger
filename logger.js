@@ -26,11 +26,22 @@
         this.setLoggerLevel(this.loggerLevel);
     }
 
-    Logger.prototype.debug = (console && console.debug) || new Function;
-    Logger.prototype.log = (console && console.log) || new Function;
-    Logger.prototype.info = (console && console.info) || new Function;
-    Logger.prototype.warn = (console && console.warn) || new Function;
-    Logger.prototype.error = (console && console.error) || new Function;
+    /**
+     * create default logger handler by console
+     * @param name console module name
+     * @returns {Function} logger handler
+     */
+    function createDefaultLogHanlder(name){
+        return function(){
+            if(console && console[name]) console[name].apply.call(console[name], console, arguments);
+        }
+    }
+
+    Logger.prototype.debug = createDefaultLogHanlder("debug");
+    Logger.prototype.log = createDefaultLogHanlder("log");
+    Logger.prototype.info = createDefaultLogHanlder("info");
+    Logger.prototype.warn = createDefaultLogHanlder("warn");
+    Logger.prototype.error = createDefaultLogHanlder("error");
     
     /**
      * set logger level
