@@ -1,0 +1,32 @@
+{
+    "name": "logger",
+    "version": "0.1.0",
+    "description": "A js logger plugin.Same as the java module named log4j.",
+    "main": "index.js",
+    "directories": {
+        "test": "test"
+    },
+    "scripts": {
+        "test": "node test/test.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/rdshoep/logger.git"
+    },
+    "keywords": [
+        "logger"
+    ],
+    "author": "rdshoep@gmail.com",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/rdshoep/logger/issues"
+    },
+    "homepage": "https://github.com/rdshoep/logger",
+    "devDependencies": {
+        "grunt": "*",
+        "load-grunt-tasks": "*",
+        "grunt-contrib-jshint": "~0.4.0",
+        "grunt-contrib-copy": "~0.4.0",
+        "grunt-contrib-uglify": "~0.4.0"
+    }
+}
