@@ -32,9 +32,11 @@
      * @returns {Function} logger handler
      */
     function createDefaultLogHanlder(name){
-        return function(){
+        function fn(){
             if(console && console[name]) console[name].apply.call(console[name], console, arguments);
         }
+
+        return bind(fn, this, "[" + name.toUpperCase() + "]", new Date);
     }
 
     Logger.prototype.debug = createDefaultLogHanlder("debug");
@@ -101,6 +103,31 @@
             }
         }
         return finalObj;
+    };
+
+    /**
+     * create a new function with the context and other params
+     * like bind(function, context, args...) | bind(Object, "methodName", args...)
+     * @param fn the function self or its owner
+     * @param context context or owner's property name
+     * @returns {*} new function with the context and other params
+     */
+    function bind(fn, context) {
+        var tmp;
+        //fn is the owner, context is the function's name
+        if (context == "string") {
+            tmp = fn;
+            fn = fn[context];
+            context = tmp;
+        }
+        //if fn is't function, return
+        if (typeof fn !== "function") return undefined;
+
+        //get other params
+        var args = [].slice.call(arguments, 2);
+        return function () {
+            fn.apply(context || this, [].concat(args, [].slice.call(arguments, 0)));
+        };
     };
 
     var logger = new Logger("error");
